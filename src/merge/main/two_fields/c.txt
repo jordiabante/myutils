@@ -1,0 +1,5 @@
+chrI	20	3.0
+chrI	40	1.0
+chrII	12	3.0
+chrII	26	1.0
+chrII	40	5.0
