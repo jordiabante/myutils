@@ -99,9 +99,9 @@ then
 fi
 
 # Loop through all the other files
+i=3
 for file in "$@";
 do 
-  i=3
   if [[ "$file" =~ \.gz$ ]];
   then
     echo "$(date): Merging ${file} ..."
@@ -117,7 +117,7 @@ do
   then
     cmd+=" 1.${i}"
   fi
-  i+=1
+  ((i++))
 done
 
 # Postprocess input files and output file
