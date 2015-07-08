@@ -1,0 +1,31 @@
+Description:
+  Script to merge multiple files by uniting/intersecting the first or the first two columns column.
+
+Usage:
+  merge.sh  [OPTIONS]  -- FILE_1 ... FILE_N
+
+Options:
+  -h--help                Help.
+  -o--outdir              Output directory. Default: $PWD
+  -p--prefix              File name prefix (no extension included). Default: merge_out
+  -n--na                  Add null fields.
+  -t--two                 Merge by the first two fields. E.g. chr and pos.
+
+Examples:
+  merge.sh -n -p merge_out_abc -- a.txt b.txt c.txt.gz
+  merge.sh -nt -p merge_out_abc -- a.txt b.txt c.txt.gz
+
+Dependancies:
+  coreutils
+
+Notes:
+  - Input files can be compressed.
+  - Input files doesn't need to be sorted a priori.
+  - Input files shouldn't have header for now.
+
+Date:
+  2015/07/07
+
+Author:
+  Jordi Abante <abante.jordi@gmail.com>
+  https://jordiabante.wordpress.com
