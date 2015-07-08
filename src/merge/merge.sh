@@ -82,8 +82,13 @@ fi
 
 # Copy first file and shift argument
 echo "$(date): Merging $1 ..."
-first_file="$(realpath "$1")"
-cat <(sort "$1") > "$out_file" && shift
+first_file="$1"
+if [[ "$first_file" =~ \.gz$ ]];
+then
+  zcat "$first_file" | sort -k 1b,1 > "$out_file" && shift
+else
+  cat "$first_file" | sort -k 1b,1 > "$out_file" && shift
+fi
 
 ## Command options
 cmd="join"
@@ -100,11 +105,11 @@ do
   if [[ "$file" =~ \.gz$ ]];
   then
     echo "$(date): Merging ${file} ..."
-    eval "$cmd" "$out_file" <(sort <(zcat "$file")) > "$temp_file"
+    eval "$cmd" "$out_file" <(sort -k 1b,1 <(zcat "$file")) > "$temp_file"
     cat "$temp_file" > "$out_file" 
   else
     echo "$(date): Merging ${file} ..."
-    eval "$cmd" "$out_file" <(sort "$file") > "$temp_file"
+    eval "$cmd" "$out_file" <(sort -k 1b,1 "$file") > "$temp_file"
     cat "$temp_file" > "$out_file" 
   fi
   # Update command if na activated
