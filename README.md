@@ -11,4 +11,4 @@ Installation
 
 
 
-![stormtroop](https://octodex.github.com/stormtroopocat/)
+![stormtroop](https://octodex.github.com/images/stormtroopocat.png)
