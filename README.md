@@ -5,10 +5,14 @@ Installation
 
         git clone git@github.com:jordiabante/myutils.git 
 
-2. Add the bin folder in the repository to your path variable by adding the following line to the `.bashrc` file:
+2. Add the bin folder in the repository to your path variable by adding the following line to the `.bashrc` (`.bash_profile` in Mac) file:
 
         export PATH="path/to/bin:$PATH"
 
+3. If the machine running the code is Machintosh install coreutils (sudo port install coreutils) as well as: gzip, grep, getopt, mysql, openssl, readline, boost, zlib. Add the following line to the `.bashrc` (`.bash_profile` in Mac) file:
+
+        export PATH="/opt/local/libexec/gnubin:$PATH"
+        
 Usage
 -----------------
 
