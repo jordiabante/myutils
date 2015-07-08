@@ -9,6 +9,13 @@ Installation
 
         export PATH="path/to/bin:$PATH"
 
+Usage
+-----------------
 
+1. Every folder (`script_name`) will contain the following files and directories:
+  1. `sript_name.sh`: bash script
+  2. `main/`
+    * `main.sh`: bash script to try the command with toy example.
+    * Files required for the toy example.
 
 ![stormtroop](https://octodex.github.com/images/stormtroopocat.png)
