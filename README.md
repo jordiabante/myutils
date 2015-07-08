@@ -9,8 +9,9 @@ Installation
 
         export PATH="path/to/bin:$PATH"
 
-3. If the machine running the code is Machintosh install coreutils (sudo port install coreutils) as well as: gzip, grep, getopt, mysql, openssl, readline, boost, zlib. Add the following line to the `.bashrc` (`.bash_profile` in Mac) file:
+3. If the machine running the code is Machintosh install coreutils (sudo port install coreutils) as well as: sed,gzip, grep, getopt, mysql, openssl, readline, boost, zlib. Add the following line to the `.bashrc` (`.bash_profile` in Mac) file:
 
+        export PATH="/opt/local/bin:$PATH"
         export PATH="/opt/local/libexec/gnubin:$PATH"
         
 Usage
