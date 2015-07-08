@@ -11,4 +11,4 @@ Installation
 
 
 
-![Minion](http://octodex.github.com/images/minion.png)
+![stormtroop](https://octodex.github.com/stormtroopocat/)
