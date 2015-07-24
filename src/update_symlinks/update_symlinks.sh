@@ -50,7 +50,12 @@ package="$1"
 package_path="$(readlink -f "$package")"
 
 # List bash scripts (avoid symlinks and main.sh)
-scripts="$(find "$package" -type f -executable ! -name main.sh ! -name *.sample ! -name *.o ! -name *.py ! -name *.R)"
+scripts="$(find "$package" -type f -executable \
+! -name main.sh \
+! -name *.sample \
+! -name *.o \
+! -name *.py \
+! -name *.R)"
 
 # Refresh symlinks
 cd "${package_path}/bin"

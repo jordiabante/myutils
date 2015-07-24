@@ -6,7 +6,7 @@ Usage:
 
 Options:
   -h--help                Help.
-  -o--outdir              Output directory. Default: $PWD
+  -d--outdir              Output directory. Default: $PWD
   -p--prefix              File name prefix (no extension included). Default: merge_out
   -n--na                  Add null fields.
   -t--two                 Merge by the first two fields. E.g. chr and pos.
