@@ -1,0 +1,18 @@
+Description:
+  Refresh symlinks in bin folder.
+
+Usage:
+  update_symlinks.sh  PACKAGE
+
+Options:
+  -h--help                Help.
+
+Examples:
+  update_symlinks.sh myutils
+
+Date:
+  2015/07/24
+
+Author:
+  Jordi Abante <abante.jordi@gmail.com>
+  https://jordiabante.wordpress.com
