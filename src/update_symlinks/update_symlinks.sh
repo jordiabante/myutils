@@ -59,7 +59,7 @@ scripts="$(find "$package" -type f -executable \
 ! -name *.R)"
 
 # Refresh symlinks
-rm "${package_path}"/bin/*.sh
+rm -f "${package_path}"/bin/*.sh
 cd "${package_path}/bin"
 while read line;do
     name="$(basename "$line")"
