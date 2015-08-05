@@ -43,29 +43,29 @@ do
   esac
 done
 
-# Read package to be updated
-package="$1"
+# Loop through all the arguments to find the less common prefix
+lcp="$1" && shift
+length=${#lcp}
+for arg in "$@"
+do
+    for ((i=0; i<${length}; i++)); do
+        if [[ "${lcp:0:i}" == "${arg:0:i}" ]] 
+        then
+            continue
+        else
+            (( i-- ))
+            lcp="${lcp:0:i}"                       
+            length="${#lcp}"
+        fi
+    done
+done
 
-# Full path
-package_path="$(readlink -f "$package")"
+# Get rid of the underscore at the end
+lcp="${lcp%_}"
 
-# List bash scripts (avoid symlinks and main.sh)
-scripts="$(find "$package" -type f -executable \
-! -name main.sh \
-! -name *.sample \
-! -name *.o \
-! -name *.py \
-! -name *.pl \
-! -name *.R)"
+# Get rid of the path if existent
+lcp="${lcp##*/}"
 
-# Refresh symlinks
-rm "${package_path}"/bin/*.sh
-cd "${package_path}/bin"
-while read line;do
-    name="$(basename "$line")"
-    directory="$(dirname "$line")"
-    directory="${directory#*/src/}"
-    src_path="../src/${directory}/${name}"
-    bin_path="../bin/${name}"
-    ln -sf "${src_path}" "${bin_path}"
-done < <(echo "$scripts")
+# Output
+echo "$lcp"
+

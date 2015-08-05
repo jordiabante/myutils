@@ -1,0 +1,18 @@
+Description:
+    Finds less common prefix between a set of strings.
+
+Usage:
+    less_common_prefix.sh  LIST
+
+Options:
+    -h--help                Help.
+
+Examples:
+    less_common_prefix.sh sample_A_1.txt sample_A_2.txt sample_B_1.txt sample_B_2.txt
+
+Date:
+    2015/07/27
+
+Author:
+    Jordi Abante <abante.jordi@gmail.com>
+    https://jordiabante.wordpress.com

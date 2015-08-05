@@ -1,0 +1,1 @@
+../src/less_common_prefix/less_common_prefix.sh
