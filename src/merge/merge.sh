@@ -69,26 +69,15 @@ if [ "$two" ]
 then
   for file in "$@";
   do
-    if [[ "$file" =~ \.gz$ ]];
-    then
-      zcat "$file" | sed 's/\t/_/' > "$temp_file"
+      zcat -f "$file" | sed 's/\t/_/' > "$temp_file"
       cat "$temp_file" > "$file"
-    else
-      cat "$file" | sed 's/\t/_/' > "$temp_file"
-      cat "$temp_file" > "$file"
-    fi
   done
 fi
 
 # Copy first file and shift argument
 echo "$(date): Merging $1 ..."
 first_file="$1"
-if [[ "$first_file" =~ \.gz$ ]];
-then
-  zcat "$first_file" | sort -k 1b,1 > "$out_file" && shift
-else
-  cat "$first_file" | sort -k 1b,1 > "$out_file" && shift
-fi
+zcat -f "$first_file" | sort -k 1b,1 > "$out_file" && shift
 
 ## Command options
 cmd="join"
@@ -102,35 +91,28 @@ fi
 i=3
 for file in "$@";
 do 
-  if [[ "$file" =~ \.gz$ ]];
-  then
     echo "$(date): Merging ${file} ..."
-    eval "$cmd" "$out_file" <(sort -k 1b,1 <(zcat "$file")) > "$temp_file"
-    cat "$temp_file" > "$out_file" 
-  else
-    echo "$(date): Merging ${file} ..."
-    eval "$cmd" "$out_file" <(sort -k 1b,1 "$file") > "$temp_file"
-    cat "$temp_file" > "$out_file" 
-  fi
-  # Update command if na activated
-  if [ "$na" ]
-  then
-    cmd+=" 1.${i}"
-  fi
-  ((i++))
+    eval "$cmd" "$out_file" <(sort -k 1b,1 <(zcat -f "$file")) > "$temp_file"
+    cat "$temp_file" | sort -k 1,1 > "$out_file" 
+    # Update command if na activated
+    if [ "$na" ]
+    then
+        cmd+=" 1.${i}"
+    fi
+    ((i++))
 done
 
 # Postprocess input files and output file
 if [ "$two" ]
 then
   cat "$out_file" | sed 's/_/\t/' > "$temp_file"
-  cat "$temp_file" > "$out_file"
-  cat "$first_file" | sed 's/_/\t/' > "$temp_file"
-  cat "$temp_file" > "$first_file"
+  cat "$temp_file" | sort -k 1,1 -k 2,2n > "$out_file"
+  zcat -f "$first_file" | sed 's/_/\t/' > "$temp_file"
+  cat "$temp_file" | gzip > "$first_file"
   for file in "$@";
   do
-    cat "$file" | sed 's/_/\t/' > "$temp_file"
-    cat "$temp_file" > "$file"
+    zcat -f "$file" | sed 's/_/\t/' > "$temp_file"
+    cat "$temp_file" | gzip > "$file"
   done
 fi
 
