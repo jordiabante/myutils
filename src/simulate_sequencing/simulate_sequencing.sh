@@ -11,7 +11,7 @@ if [ $# -eq 0 ]
         exit 1
 fi
 
-TEMP=$(getopt -o hd:l:n: -l help,outdir:,length:,num_reads: -n "$script_name.sh" -- "$@")
+TEMP=$(getopt -o hd:t:l:n: -l help,outdir:,threads:,length:,num_reads: -n "$script_name.sh" -- "$@")
 
 if [ $? -ne 0 ] 
 then
@@ -25,6 +25,7 @@ eval set -- "$TEMP"
 outdir="$PWD"
 length=30
 num_reads=10
+threads=2
 
 # Options
 while true
@@ -36,6 +37,10 @@ do
       ;;  
     -d|--outdir)
       outdir="$2"
+      shift 2
+      ;;  
+    -t|--threads)
+      threads="$2"
       shift 2
       ;;  
     -l|--length)

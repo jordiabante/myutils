@@ -11,7 +11,7 @@ if [ $# -eq 0 ]
         exit 1
 fi
 
-TEMP=$(getopt -o hd:c:l:p: -l help,outdir:,chr:,length:,prefix: -n "$script_name.sh" -- "$@")
+TEMP=$(getopt -o hd:t:c:l:p: -l help,outdir:,threads:,chr:,length:,prefix: -n "$script_name.sh" -- "$@")
 
 if [ $? -ne 0 ] 
 then
@@ -27,6 +27,7 @@ chr=5
 length=2000
 prefix="simulated_genome"
 bases="ACTG"
+threads=2
 
 # Options
 while true
@@ -38,6 +39,10 @@ do
       ;;  
     -d|--outdir)
       outdir="$2"
+      shift 2
+      ;;
+    -t|--threads)
+      threads="$2"
       shift 2
       ;;
     -c|--chr)
@@ -63,16 +68,30 @@ do
   esac
 done
 
-# Output
+# Start time
+start_time="$(date +"%s%3N")"
+
+# Temp and output
 outfile="${outdir}/${prefix}.fa"
+tempfile="${outdir}/${prefix}"
+export outfile
+export tempfile
+export length
 
 # Outdir
 mkdir -p "$outdir"
 
-# Run
-for i in `eval echo {1..${chr}}`;
-do
-  echo ">chr${i}" >> "$outfile"
-  random_sequence_generator.sh -l "$length" >> "$outfile"
-done
+# Generate a file for each chromosome
+seq 1 "$chr" | xargs -I {} --max-proc "$threads" bash -c \
+    'echo ">chr{}" >> '${tempfile}_{}.tmp' && random_sequence_generator.sh -l '$length' >> '${tempfile}_{}.tmp''
 
+# Concatenate all chromosomes and filter
+seq 1 "$chr" | xargs -I {} --max-proc 1 bash -c \
+    'cat '${tempfile}_{}.tmp' >> '$outfile''
+
+# Remove temp file
+rm -f ${tempfile}*tmp*
+
+# Time elapsed
+end_time="$(date +"%s%3N")"
+echo "Time elapsed: $(( $end_time - $start_time )) ms"
