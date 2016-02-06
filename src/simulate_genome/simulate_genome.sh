@@ -83,7 +83,7 @@ mkdir -p "$outdir"
 
 # Generate a file for each chromosome
 seq 1 "$chr" | xargs -I {} --max-proc "$threads" bash -c \
-    'echo ">chr{}" >> '${tempfile}_{}.tmp' && random_sequence_generator.sh -l '$length' >> '${tempfile}_{}.tmp''
+    'echo ">random_seq_{}" >> '${tempfile}_{}.tmp' && random_sequence_generator.sh -l '$length' >> '${tempfile}_{}.tmp''
 
 # Concatenate all chromosomes and filter
 seq 1 "$chr" | xargs -I {} --max-proc 1 bash -c \
