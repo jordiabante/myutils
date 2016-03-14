@@ -1,1 +1,1 @@
-../src/script_1/script_1.sh
+../src/update_symlinks/main/test_package/src/script_1/script_1.sh

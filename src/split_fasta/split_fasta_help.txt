@@ -1,0 +1,26 @@
+Description:
+    Split a FASTA file.
+
+Usage:
+    split_fasta.sh  [options]  -- FASTA_FILE
+
+Options:
+    -h|--help           Help.
+    -d|--outdir         Output directory. Default: $PWD.
+    -n|--n_files        Number of files used. Default: 2.
+
+Examples:
+    split_fasta.sh -d out -n 4 -- input.fa
+
+Dependancies:
+    NA
+
+Upstream:
+    NA
+
+Date:
+    2016/03/13
+
+Author:
+    Jordi Abante <abante.jordi@gmail.com>
+    https://jordiabante.wordpress.com
