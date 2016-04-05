@@ -1,0 +1,1 @@
+../src/fasta_sampling/fasta_sampling.sh
