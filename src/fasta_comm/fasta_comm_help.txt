@@ -1,0 +1,25 @@
+Description:
+    Samples a certain percentage of entries from a FASTA file.
+
+Usage:
+    fasta_sampling.sh  [options]  -- INPUT PERCENTAGE
+
+Options:
+    -h|--help           Help.
+    -d|--outdir         Output directory. Default: $PWD.
+
+Examples:
+    fasta_sampling.sh -d out -- input.fa 50
+
+Dependancies:
+    perl
+
+Upstream:
+    NA
+
+Date:
+    2016/04/05
+
+Author:
+    Jordi Abante <abante.jordi@gmail.com>
+    https://jordiabante.wordpress.com

@@ -26,7 +26,7 @@ fi
 eval set -- "$TEMP"
 
 # Defaults
-outdir="$PWD"
+outdir="${PWD}/fasta_comm_out"
 
 # Options
 while true
@@ -55,17 +55,16 @@ done
 cat "${script_absdir}/../../LICENSE"
 
 # Inputs
-fasta_file="$1"
-perc="$2"
+fasta_file1="$1"
+fasta_file2="$2"
 
 # Outputs
-fasta_basename="$(basename "$fasta_file")"
-prefix="${fasta_basename%%.*}"
-outfile="${outdir}/${prefix}_${perc}.fa"
+fasta_basename1="$(basename "$fasta_file1")"
+fasta_basename2="$(basename "$fasta_file2")"
+prefix1="${fasta_basename1%%.*}"
+prefix2="${fasta_basename2%%.*}"
+outfile="${outdir}/${prefix2}.fa"
 mkdir -p "$outdir"
 
-# Count number of entries
-Ntotal="$(zcat -f "$fasta_file" | grep '^>' | wc -l)"
-
 # Call perl script
-"$perl_script" "$Ntotal" "0.$perc" < "$fasta_file" > "$outfile"
+"$perl_script" "$fasta_file1" "$fasta_file2" "$outfile" > "$outfile"

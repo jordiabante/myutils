@@ -13,10 +13,17 @@ my $pos=0;
 my $i=0;
 my $total=0;
 my @sorted=();
+my $st_time;
+my $current_time;
 
 # Main
+$st_time = localtime;
+print STDERR "[${st_time}]: Generating random IDs\n";
 generate_array();
+$current_time = localtime;
+print STDERR "[${current_time}]: Sampling from FASTA file\n";
 read_fasta();
+
 
 # Subs
 sub read_fasta
@@ -38,6 +45,8 @@ sub read_fasta
         }   
         if($total == $Nout)
         {
+            $current_time = localtime;
+            print STDERR "[${current_time}]: Saving output\n";
             exit 0
         }
     }   
