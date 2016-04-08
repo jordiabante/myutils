@@ -56,16 +56,16 @@ cat "${script_absdir}/../../LICENSE"
 
 # Inputs
 fasta_file="$1"
-perc="$2"
+sample_size="$2"
 
 # Outputs
 fasta_basename="$(basename "$fasta_file")"
 prefix="${fasta_basename%%.*}"
-outfile="${outdir}/${prefix}_${perc}.fa"
+outfile="${outdir}/${prefix}_${sample_size}.fa"
 mkdir -p "$outdir"
 
 # Count number of entries
 Ntotal="$(zcat -f "$fasta_file" | grep '^>' | wc -l)"
 
 # Call perl script
-"$perl_script" "$Ntotal" "0.$perc" < "$fasta_file" > "$outfile"
+"$perl_script" "$Ntotal" "$sample_size" < "$fasta_file" > "$outfile"

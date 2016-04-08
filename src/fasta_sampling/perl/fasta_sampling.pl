@@ -5,10 +5,9 @@ use List::Util qw(shuffle);
 
 # Arguments
 my $N = @ARGV[0];
-my $perc = @ARGV[1];
+my $Nout = @ARGV[1];
 
 # Global Variables
-my $Nout=0;
 my $pos=0;
 my $i=0;
 my $total=0;
@@ -56,7 +55,6 @@ sub read_fasta
 sub generate_array
 {
     my @tmp = shuffle 1..${N};
-    $Nout=$N * $perc;
     my @random=@tmp[0..$Nout-1];    
     @sorted = sort { $a <=> $b } @random;
 #    foreach (@sorted)

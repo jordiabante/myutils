@@ -1,15 +1,15 @@
 Description:
-    Samples a certain percentage of entries from a FASTA file.
+    Samples a certain number of entries from a FASTA file.
 
 Usage:
-    fasta_sampling.sh  [options]  -- INPUT PERCENTAGE
+    fasta_sampling.sh  [options]  -- INPUT N_SAMPLES
 
 Options:
     -h|--help           Help.
     -d|--outdir         Output directory. Default: $PWD.
 
 Examples:
-    fasta_sampling.sh -d out -- input.fa 50
+    fasta_sampling.sh -d out -- input.fa 100
 
 Dependancies:
     perl
