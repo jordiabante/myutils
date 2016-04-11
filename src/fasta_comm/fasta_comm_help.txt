@@ -6,7 +6,8 @@ Usage:
 
 Options:
     -h|--help           Help.
-    -d|--outdir         Output directory. Default: $PWD.
+    -d|--outdir         Output directory. Default: '$PWD'.
+    --delim             Delimiter string. Default: '\S'.
 
 Examples:
     fasta_comm.sh -d out -- input_1.fa input_2.fa

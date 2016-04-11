@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 # Arguments
-my ($fasta_file1,$fasta_file2,$outfile) = @ARGV;
+my ($fasta_file1,$fasta_file2,$delim,$outfile) = @ARGV;
 
 # Global Variables
 my $st_time;
@@ -51,7 +51,7 @@ sub filter_fasta
     # Loop through the second file
     while (<FASTA>) 
     {
-        if (/^>(\S+)/)
+        if (/^>(${delim}+)/)
         {
             my $id = $1;
             # Remove the end designator from paired end reads
