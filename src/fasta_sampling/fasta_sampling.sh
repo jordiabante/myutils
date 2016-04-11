@@ -52,7 +52,7 @@ do
 done
 
 # Print LICENSE
-cat "${script_absdir}/../../LICENSE"
+cat "${script_absdir}/../../LICENSE" >&2
 
 # Inputs
 fasta_file="$1"
