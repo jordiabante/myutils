@@ -31,7 +31,7 @@ sub get_ids
     foreach my $line (<FASTA>)
     {   
         chomp($line);
-        if( $line =~ />(\S+)/)
+        if( $line =~ m|^>(.*?${delim}).*$|)
         {   
             $ids{$1} = 1;
         }   
@@ -51,7 +51,7 @@ sub filter_fasta
     # Loop through the second file
     while (<FASTA>) 
     {
-        if (/^>(${delim}+)/)
+        if (m|^>(.*?${delim}).*$|)
         {
             my $id = $1;
             # Remove the end designator from paired end reads

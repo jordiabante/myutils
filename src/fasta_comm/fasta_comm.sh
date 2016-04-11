@@ -27,7 +27,7 @@ eval set -- "$TEMP"
 
 # Defaults
 outdir="${PWD}/fasta_comm_out"
-delim="\S"
+delim="\s"
 
 # Options
 while true
