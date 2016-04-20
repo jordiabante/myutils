@@ -15,7 +15,7 @@ if [ $# -eq 0 ]
         exit 1
 fi
 
-TEMP=$(getopt -o hd: -l help,outdir:,delim: -n "$script_name.sh" -- "$@")
+TEMP=$(getopt -o hd: -l help,outdir:,regex: -n "$script_name.sh" -- "$@")
 
 if [ $? -ne 0 ]
 then
@@ -27,7 +27,7 @@ eval set -- "$TEMP"
 
 # Defaults
 outdir="${PWD}/fasta_comm_out"
-delim="\s"
+regex="\s"
 
 # Options
 while true
@@ -41,8 +41,8 @@ do
       outdir="$2"
       shift 2
       ;;  
-    --delim)
-      delim="$2"
+    --regex)
+      regex="$2"
       shift 2
       ;;  
     --)
@@ -72,4 +72,4 @@ outfile="${outdir}/${prefix2}.fa"
 mkdir -p "$outdir"
 
 # Call perl script
-"$perl_script" "$fasta_file1" "$fasta_file2" "$delim" "$outfile" > "$outfile"
+"$perl_script" "$fasta_file1" "$fasta_file2" "$regex" "$outfile" > "$outfile"

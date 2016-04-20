@@ -7,11 +7,12 @@ Usage:
 Options:
     -h|--help           Help.
     -d|--outdir         Output directory. Default: '$PWD'.
-    --delim             Delimiter string as a regex (1st match). Default: '\s'.
+    --regex             Delimiter string as a regex (1st match). Default: '\s'.
 
 Examples:
-    fasta_comm.sh -d out --delim "\s" -- input_1.fa input_2.fa
-    fasta_comm.sh -d out --delim "\/" -- input_1.fa input_2.fa
+    fasta_comm.sh -d out --regex "\s" -- input_1.fa input_2.fa
+    fasta_comm.sh -d out --regex "\/" -- input_1.fa input_2.fa
+    fasta_comm.sh -d out --regex "[\/|\s]" -- input_1.fa input_2.fa
 
 Dependancies:
     perl
