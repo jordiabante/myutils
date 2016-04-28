@@ -1,0 +1,1 @@
+../src/fasta_split/fasta_split.sh
