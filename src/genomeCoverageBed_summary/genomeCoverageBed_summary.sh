@@ -61,7 +61,7 @@ min_coverage="$2"
 # Outputs
 coverage_basename="$(basename "$coverage_file")"
 prefix="${coverage_basename%%.*}"
-outfile="${outdir}/${prefix}.summary.txt"
+outfile="${outdir}/${prefix}.summary_${min_coverage}.txt"
 mkdir -p "$outdir"
 
 # Call perl script
