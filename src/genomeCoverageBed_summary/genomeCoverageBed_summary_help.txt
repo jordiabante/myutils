@@ -1,0 +1,25 @@
+Description:
+    Generates summary for genomeCoverageBed output.
+
+Usage:
+    genomeCoverageBed_summary.sh  [options]  -- INPUT MIN_COV
+
+Options:
+    -h|--help           Help.
+    -d|--outdir         Output directory. Default: $PWD.
+
+Examples:
+    genomeCoverageBed_summary.sh -d out -- input.fa 5
+
+Dependancies:
+    perl
+
+Upstream:
+    NA
+
+Date:
+    2016/05/09
+
+Author:
+    Jordi Abante <abante.jordi@gmail.com>
+    https://jordiabante.wordpress.com
