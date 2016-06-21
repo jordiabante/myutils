@@ -24,7 +24,7 @@ Notes:
   - Input files shouldn't have header for now.
 
 Date:
-  2015/07/07
+  2015/07/06
 
 Author:
   Jordi Abante <abante.jordi@gmail.com>
