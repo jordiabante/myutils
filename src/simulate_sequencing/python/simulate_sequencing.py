@@ -28,7 +28,7 @@ def sample_fasta(fasta_dic,n_reads,read_length):
     # Choose entry at random
     ran_entries = np.random.choice(fasta_dic.keys(),size=n_reads); #print ran_entries
     # Choose fragment size at random
-    ran_sizes = np.random.negative_binomial(n=150, p=0.5, size=n_reads); #print ran_sizes
+    ran_sizes = np.random.negative_binomial(n=200, p=0.5, size=n_reads); #print ran_sizes
     # Generate reads
     pair1 = []
     pair2 = []
