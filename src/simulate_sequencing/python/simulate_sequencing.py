@@ -8,7 +8,6 @@ from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio.Alphabet import IUPAC
-#import matplotlib.pyplot as plt
 
 
 ####################################################################################################
@@ -30,7 +29,6 @@ def sample_fasta(fasta_dic,n_reads,read_length):
     ran_entries = np.random.choice(fasta_dic.keys(),size=n_reads); #print ran_entries
     # Choose fragment size at random
     ran_sizes = np.random.negative_binomial(n=150, p=0.5, size=n_reads); #print ran_sizes
-    #plt.hist(ran_sizes, bins=20, normed=True); plt.show()
     # Generate reads
     pair1 = []
     pair2 = []
