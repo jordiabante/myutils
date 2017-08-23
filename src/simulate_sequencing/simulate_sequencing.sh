@@ -1,9 +1,36 @@
 #!/usr/bin/env bash
+# ------------------------------------------------------------------------------
+##The MIT License (MIT)
+##
+##Copyright (c) 2016 Jordi Abante
+##
+##Permission is hereby granted, free of charge, to any person obtaining a copy
+##of this software and associated documentation files (the "Software"), to deal
+##in the Software without restriction, including without limitation the rights
+##to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+##copies of the Software, and to permit persons to whom the Software is
+##furnished to do so, subject to the following conditions:
+##
+##The above copyright notice and this permission notice shall be included in all
+##copies or substantial portions of the Software.
+##
+##THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+##IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+##FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+##AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+##LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+##OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+##SOFTWARE.
+# ------------------------------------------------------------------------------
+
 shopt -s extglob
 
 abspath_script="$(readlink -f -e "$0")"
 script_absdir="$(dirname "$abspath_script")"
 script_name="$(basename "$0" .sh)"
+
+# Find python scripts
+python_script="${script_absdir}/python/${script_name}.py"
 
 if [ $# -eq 0 ]
     then
@@ -11,7 +38,7 @@ if [ $# -eq 0 ]
         exit 1
 fi
 
-TEMP=$(getopt -o hd:t:l:n: -l help,outdir:,threads:,length:,num_reads: -n "$script_name.sh" -- "$@")
+TEMP=$(getopt -o hd:t:l:n:p: -l help,outdir:,threads:,length:,n_reads:,prefix: -n "$script_name.sh" -- "$@")
 
 if [ $? -ne 0 ] 
 then
@@ -23,9 +50,9 @@ eval set -- "$TEMP"
 
 # Defaults
 outdir="$PWD"
-length=30
-num_reads=10
-threads=2
+length=100
+n_reads=1000
+prefix="seq_sim"
 
 # Options
 while true
@@ -39,16 +66,16 @@ do
       outdir="$2"
       shift 2
       ;;  
-    -t|--threads)
-      threads="$2"
-      shift 2
-      ;;  
     -l|--length)
       length="$2"
       shift 2
       ;;  
-    -n|--num_reads)
-      num_reads="$2"
+    -n|--n_reads)
+      n_reads="$2"
+      shift 2
+      ;;  
+    -p|--prefix)
+      prefix="$2"
       shift 2
       ;;  
     --) 
@@ -64,57 +91,7 @@ done
 
 # Read input file
 referenceFile="$1"
-referenceName="$(basename "$referenceFile")"
-referenceDir="$(dirname "$referenceFile")"
 
-# Output prefix
-prefix="${referenceName%%.*}"
-outfile1="${outdir}/simulated_read_${prefix}_R1.fastq"
-outfile2="${outdir}/simulated_read_${prefix}_R2.fastq"
+# Call python script
+"${python_script}" "$referenceFile" "$outdir" "$prefix" "$n_reads" "$length"
 
-# Outdir
-mkdir -p "$outdir"
-
-# Count chromosomes in .fasta file
-num_chr="$(cat "$referenceFile" | grep "^>" | wc -l)"
-length="$(($length - 1))"
-
-# Run
-for i in `eval echo {1..${num_reads}}`;
-do
-  # Pick a chr randomly
-  chr_number="$(shuf -i 1-${num_chr} -n 1)"
-  # Store the chr in chr
-  chr="$(cat "$referenceFile" | grep -v "^>" | sed -n ${chr_number}p )"
-  # Chromosome length
-  chr_length="$(echo "$chr" | wc -c)"
-  # Start and end R1
-  bound="$(($chr_length - $length))"
-  start="$(shuf -i 1-${bound} -n 1)"
-  end="$((start + $length))"
-  # Trim the read and do the complimentary
-  read_R1="$(echo "$chr" | cut -c "${start}-${end}")"
-  # Start and end R2
-  fragment_length="$(shuf -i 80-200 -n 1)"
-  end="$(($start + $fragment_length))"
-  if [ "$end" -ge "$chr_length" ];
-  then
-    end="$chr_length"
-  fi
-  start="$(($end - $length))"
-  # Trim the read and do the complimentary
-  read_R2="$(echo "$chr" | cut -c "${start}-${end}")"
-  read_R2_reverse_complemented="$(reverse_complement.sh "$read_R2")"
-  # Generate Quality
-  characters="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-  quality="$(cat /dev/urandom | tr -dc "$characters" | fold -w "$(($length + 1))" | head -n 1)"
-  # Print it
-  id="@simulated_read_${prefix}:${i}"
-  echo -e "${id}\n${read_R1}\n+\n${quality}" >> "$outfile1"
-  echo -e "${id}\n${read_R2_reverse_complemented}\n+\n${quality}" >> "$outfile2"
-done
-
-# Compress
-gzip "$outfile1" &
-gzip "$outfile2"
-wait
