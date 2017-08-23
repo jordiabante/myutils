@@ -7,14 +7,15 @@ Usage:
 Options:
   -h|--help           Help message.
   -d|--outdir         Output directory.
-  -l|--length         Length of the reads. Default: 30.
-  -n|--num_reads      Number of reads. Default: 10.
+  -l|--length         Length of the reads. Default: 100.
+  -n|--n_reads        Number of reads. Default: 1000.
+  -p|--prefix         Prefix of FASTQ files. Default: 'seq_sim'.
          
 Examples:
   simulate_sequencing.sh -- reference.fasta
 
 Date:
-  2015/07/15
+  2017/08/23
 
 Author:
   Jordi Abante <abante.jordi@gmail.com>
