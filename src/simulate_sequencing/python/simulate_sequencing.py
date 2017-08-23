@@ -65,10 +65,12 @@ def sample_fasta(fasta_dic,n_reads,read_length):
         # Append to respective pair
         pair1.append(SeqRecord(seq1, id = 'EASX:X:X:X:X:%i:%i' % (i,i), description = '1:Y:0:NNNNNN'))
         pair2.append(SeqRecord(seq2, id = 'EASX:X:X:X:X:%i:%i' % (i,i), description = '2:Y:0:NNNNNN'))
-        # Add quality score (mean=(pn/1-p))
+        # Add quality score (mean=(pn/1-p)) and max PHRED is 93
         qual1 = np.random.negative_binomial(n=35, p=0.5, size=len(seq1))
+        qual1 = np.minimum(qual1,93*np.ones(len(seq1)))
         pair1[i-1].letter_annotations["phred_quality"] = list(qual1)
         qual2 = np.random.negative_binomial(n=35, p=0.5, size=len(seq2))
+        qual2 = np.minimum(qual1, 93 * np.ones(len(seq2)))
         pair2[i-1].letter_annotations["phred_quality"] = list(qual2)
         # Print for debugging
         # print(pair1[i-1].upper().format("fastq"))
