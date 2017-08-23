@@ -32,7 +32,7 @@ def sample_fasta(fasta_dic,n_reads,read_length):
     # Generate reads
     pair1 = []
     pair2 = []
-    for i in range(1,n_reads):
+    for i in range(0,n_reads):
         # Limit of the start position
         limit = len(fasta_dic[ran_entries[i]]) - max(ran_sizes[i],read_length) - 1
         start = np.random.randint(0, limit)
@@ -68,13 +68,13 @@ def sample_fasta(fasta_dic,n_reads,read_length):
         # Add quality score (mean=(pn/1-p)) and max PHRED is 93
         qual1 = np.random.negative_binomial(n=35, p=0.5, size=len(seq1))
         qual1 = np.minimum(qual1,93*np.ones(len(seq1)))
-        pair1[i-1].letter_annotations["phred_quality"] = list(qual1)
+        pair1[i].letter_annotations["phred_quality"] = list(qual1)
         qual2 = np.random.negative_binomial(n=35, p=0.5, size=len(seq2))
         qual2 = np.minimum(qual1, 93 * np.ones(len(seq2)))
-        pair2[i-1].letter_annotations["phred_quality"] = list(qual2)
+        pair2[i].letter_annotations["phred_quality"] = list(qual2)
         # Print for debugging
-        # print(pair1[i-1].upper().format("fastq"))
-        # print(pair2[i-1].upper().format("fastq"))
+        # print(pair1[i].upper().format("fastq"))
+        # print(pair2[i].upper().format("fastq"))
     # Return pairs
     return pair1,pair2
 
