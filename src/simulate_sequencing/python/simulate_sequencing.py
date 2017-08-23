@@ -3,12 +3,12 @@
 import sys
 import re
 import numpy as np
-import matplotlib.pyplot as plt
 from datetime import datetime
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio.Alphabet import IUPAC
+#import matplotlib.pyplot as plt
 
 
 ####################################################################################################
