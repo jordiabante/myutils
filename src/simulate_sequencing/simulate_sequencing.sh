@@ -38,7 +38,7 @@ if [ $# -eq 0 ]
         exit 1
 fi
 
-TEMP=$(getopt -o hd:t:l:n:p: -l help,outdir:,threads:,length:,n_reads:,prefix: -n "$script_name.sh" -- "$@")
+TEMP=$(getopt -o hd:t:l:n:p:f:s: -l help,outdir:,threads:,length:,n_reads:,prefix:,frag_size:,seed: -n "$script_name.sh" -- "$@")
 
 if [ $? -ne 0 ] 
 then
@@ -50,9 +50,11 @@ eval set -- "$TEMP"
 
 # Defaults
 outdir="$PWD"
-length=100
+length=150
 n_reads=1000
+frag_size=150
 prefix="seq_sim"
+seed=$RANDOM
 
 # Options
 while true
@@ -74,6 +76,14 @@ do
       n_reads="$2"
       shift 2
       ;;  
+    -f|--frag_size)
+      frag_size="$2"
+      shift 2
+      ;;  
+    -s|--seed)
+      seed="$2"
+      shift 2
+      ;;  
     -p|--prefix)
       prefix="$2"
       shift 2
@@ -93,5 +103,5 @@ done
 referenceFile="$1"
 
 # Call python script
-"${python_script}" "$referenceFile" "$outdir" "$prefix" "$n_reads" "$length"
+"${python_script}" "$referenceFile" "$outdir" "$prefix" "$n_reads" "$length" "$frag_size" "$seed"
 
