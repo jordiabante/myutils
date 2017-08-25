@@ -51,8 +51,8 @@ def sample_fasta(fasta_dic,n_reads,read_length,frag_size,meth_rate,seed):
         # Choose OT (0) or OB (1)
         if ot_or_ob[i]==1:
             fragment = fragment.reverse_complement()
-        # Mutate fragment (C to T mutations Bernoulli iid)
-        ran_mut = np.random.choice(2, size=len(fragment), p=[1.0-meth_rate,meth_rate])
+        # Mutate fragment (C to T mutations Bernoulli iid if not methylated)
+        ran_mut = np.random.choice(2, size=len(fragment), p=[meth_rate,1-meth_rate])
         seq = ""
         for j in range(len(fragment)):
             if (fragment[j] == 'C') & (ran_mut[j] == 1):
