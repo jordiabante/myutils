@@ -26,7 +26,7 @@ def read_fasta(infile):
     return fasta_dic
 
 # Function: sample FASTA
-def sample_fasta(fasta_dic,n_reads,read_length,frag_size,seed):
+def sample_fasta(fasta_dic,n_reads,read_length,frag_size,meth_rate,seed):
     ####################################################################################################################
     # Refer to the manual in:
     #   http://resources.qiagenbioinformatics.com/manuals/bisulfite-sequencing/
@@ -52,7 +52,7 @@ def sample_fasta(fasta_dic,n_reads,read_length,frag_size,seed):
         if ot_or_ob[i]==1:
             fragment = fragment.reverse_complement()
         # Mutate fragment (C to T mutations Bernoulli iid)
-        ran_mut = np.random.choice(2, size=len(fragment), p=[0.5, 0.5])
+        ran_mut = np.random.choice(2, size=len(fragment), p=[1.0-meth_rate,meth_rate])
         seq = ""
         for j in range(len(fragment)):
             if (fragment[j] == 'C') & (ran_mut[j] == 1):
@@ -92,7 +92,8 @@ def main():
     n_reads = int(sys.argv[4])
     read_length = int(sys.argv[5])
     frag_size = int(sys.argv[6])
-    seed = int(sys.argv[7])
+    meth_rate = float(sys.argv[7])
+    seed = int(sys.argv[8])
 
     # Read FASTA file into dic (should be optimized for large FASTA files)
     print "[{}]: Reading FASTA ...".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
@@ -100,7 +101,7 @@ def main():
 
     # Randomly sample genome
     print "[{}]: Sampling FASTA ...".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-    pair1, pair2 = sample_fasta(fasta_dic,n_reads,read_length,frag_size,seed)
+    pair1, pair2 = sample_fasta(fasta_dic,n_reads,read_length,frag_size,meth_rate,seed)
 
     # Save to file
     print "[{}]: Saving & compressing FASTQ files ...".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))

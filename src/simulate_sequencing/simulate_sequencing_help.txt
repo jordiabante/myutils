@@ -6,18 +6,19 @@ Usage:
 
 Options:
     -h|--help           Help message.
-    -d|--outdir         Output directory. Default: '$PWD'
+    -d|--outdir         Output directory. Default: '$PWD'.
     -p|--prefix         Prefix of FASTQ files. Default: 'seq_sim'.
     -l|--length         Length of the reads. Default: 150.
     -n|--n_reads        Number of reads. Default: 1000.
     -f|--frag_size      Average fragment size. Default: 150.
+    -r|--meth_rate      Methylation rate. Default: 0.5.
     -s|--seed           Seed for RNG. Default: $RANDOM.
          
 Examples:
     simulate_sequencing.sh -- reference.fasta
 
 Date:
-    2017/08/24
+    2017/08/25
 
 Author:
     Jordi Abante <abante.jordi@gmail.com>
