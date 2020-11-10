@@ -5,7 +5,7 @@ abspath_script="$(readlink -f -e "$0")"
 script_absdir="$(dirname "$abspath_script")"
 script_name="$(basename "$0" .sh)"
 
-TEMP=$(getopt -o hl: -l help,perc: -n "$script_name.sh" -- "$@")
+TEMP=$(getopt -o hp: -l help,perc: -n "$script_name.sh" -- "$@")
 
 if [ $? -ne 0 ] 
 then
@@ -16,7 +16,7 @@ fi
 eval set -- "$TEMP"
 
 # Defaults
-perc=0.50
+perc=0.5
 
 while true
 do
