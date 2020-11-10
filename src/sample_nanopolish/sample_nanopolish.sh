@@ -5,7 +5,7 @@ abspath_script="$(readlink -f -e "$0")"
 script_absdir="$(dirname "$abspath_script")"
 script_name="$(basename "$0" .sh)"
 
-TEMP=$(getopt -o hl:r -l help,length:,rna -n "$script_name.sh" -- "$@")
+TEMP=$(getopt -o hl: -l help,perc: -n "$script_name.sh" -- "$@")
 
 if [ $? -ne 0 ] 
 then
@@ -16,8 +16,7 @@ fi
 eval set -- "$TEMP"
 
 # Defaults
-length=50
-bases="ACTG"
+perc=0.50
 
 while true
 do
@@ -26,13 +25,9 @@ do
       cat "$script_absdir"/${script_name}_help.txt
       exit
       ;;  
-    -l|--length)
-      length="$2"
+    -p|--perc)
+      perc="$2"
       shift 2
-      ;;
-    -r|--rna)
-      bases="ACUG"
-      shift
       ;;
     --) 
       shift
@@ -45,5 +40,13 @@ do
   esac
 done
 
-# Run
-cat /dev/urandom | tr -dc "$bases" | fold -w "$length" | head -n 1
+# Vars
+nanofile="$1"
+outdir="$(dirname $(realpath ${nanofile}))"
+outfile="${outdir}/${nanofile%.tsv}_perc_${perc}.tsv"
+
+# Cat header
+head -n 1 "$nanofile" > "$outfile"
+
+# Add reads
+cut -f 5 "$nanofile" | awk 'NR>1{print $0| "sort -r"}' | uniq | awk -v PERC="$perc" 'BEGIN {srand()} !/^$/ { if (rand() <= PERC) print $0}' | grep -f /dev/stdin "$nanofile" >> "$outfile"

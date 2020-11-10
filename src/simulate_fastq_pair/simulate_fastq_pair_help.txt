@@ -19,4 +19,4 @@ Date:
 
 Author:
   Jordi Abante <abante.jordi@gmail.com>
-  https://jordiabante.wordpress.com
+  https://jordiabante.github.io

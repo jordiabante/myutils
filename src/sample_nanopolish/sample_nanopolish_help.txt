@@ -1,0 +1,20 @@
+Description:
+  Samples a percentage of reads from a nanopolish output file. 
+
+Usage:
+  sample_nanopolish.sh  [OPTIONS]
+
+Options:
+  -h|--help           Help message.
+  -p|--perc           Percentage of reads to be sampled. Default: 50.
+         
+Examples:
+   sample_nanopolish.sh nano_ex.tsv
+   sample_nanopolish.sh -l 50 nano_ex.tsv
+
+Date:
+  2020/11/09
+
+Author:
+  Jordi Abante <abante.jordi@gmail.com>
+  https://jordiabante.github.io

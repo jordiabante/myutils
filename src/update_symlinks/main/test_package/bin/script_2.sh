@@ -1,1 +1,0 @@
-../src/script_2/script_2.sh
